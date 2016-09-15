@@ -27,26 +27,24 @@ public class Gravitrips {
 
     private void run() {
 
-        for (int x = 0; x < COLUMNS; x++) { // mb make method init
-            for (int y = 0; y < ROWS; y++) {
-                board[x][y] = DOT;
-            }
-        }
+        initialiseBoard();
 
         do {
-
-            if (moveCounter % 2 == 0){
-                playerInput = " X ";
-            } else {
-                playerInput = " O ";
-            }
             isWon = makeMove();
+        } while (!isWon);
 
-        } while (!isWon);  //!isWon
         System.out.println("#####################");
         System.out.println("Player" + playerInput + "has won the game");
         System.out.println("#####################");
         reprintBoard();
+    }
+
+    private void initialiseBoard() {
+        for (int x = 0; x < COLUMNS; x++) {
+            for (int y = 0; y < ROWS; y++) {
+                board[x][y] = DOT;
+            }
+        }
     }
 
     private boolean makeMove() {
@@ -56,8 +54,10 @@ public class Gravitrips {
 
         if (moveCounter % 2 == 0){
             move = doMove();
+			 playerInput = " X ";
         } else {
             move = botMove();
+			playerInput = " O ";
         }
         win = checkForWin(move);
 
